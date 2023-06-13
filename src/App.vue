@@ -2,8 +2,8 @@
     <div id="root">
         <div class="todo-container">
             <div class="todo-wrap">
-                <ToHeader></ToHeader>
-                <ToList></ToList>
+                <ToHeader :addTodo="addTodo"></ToHeader>
+                <ToList :todos="todos"></ToList>
                <ToFooter></ToFooter>
             </div>
         </div>
@@ -25,6 +25,22 @@ export default {
         // ToItem,
         ToList,
         ToFooter
+    },
+    data(){
+        return {
+             todos:[
+                {id:'001',title:'抽烟',done:true},
+                {id:'002',title:'喝酒',done:true},
+                {id:'003',title:'开车',done:false},
+            ]   
+        }
+    },
+    methods:{
+        addTodo(e){
+            console.log("添加了一个数据: ",e.title)
+
+            this.todos.unshift(e)
+        }
     }
 }   
 </script>
