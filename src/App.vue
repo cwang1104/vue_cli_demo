@@ -3,8 +3,8 @@
         <div class="todo-container">
             <div class="todo-wrap">
                 <ToHeader :addTodo="addTodo"></ToHeader>
-                <ToList :todos="todos"></ToList>
-               <ToFooter></ToFooter>
+                <ToList :todos="todos" :checkTodo="checkTodo" :removeTodo="removeTodo"></ToList>
+               <ToFooter :todos="todos" :setAllTodo="setAllTodo"></ToFooter>
             </div>
         </div>
     </div>
@@ -36,10 +36,33 @@ export default {
         }
     },
     methods:{
+        checkTodo(id){
+            console.log("修改了一个数据: ",id)
+            this.todos.forEach((todo)=>{
+                if (todo.id === id) todo.done = !todo.done
+            })
+            
+        },
         addTodo(e){
             console.log("添加了一个数据: ",e.title)
-
             this.todos.unshift(e)
+        },
+        removeTodo(id){
+            console.log("删除了一个数据：",id)
+            // this.todos.forEach((todo)=>{
+            //     if (todo.id === id){
+            //         this.todos.pop(todo)
+            //     }
+            // })
+            // this.todos = this.todos.filter((todo)=>{
+            //         return todo.id !== id
+            // })
+            this.todos = this.todos.filter(todo=>todo.id !== id)
+        },
+        setAllTodo(done){
+            this.todos.forEach((todo)=>{
+                todo.done = done
+            })
         }
     }
 }   

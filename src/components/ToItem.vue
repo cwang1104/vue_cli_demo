@@ -1,17 +1,31 @@
 <template>
     <li>
         <label>
-            <input type="checkbox" :checked="todo.done"/>
+            <input type="checkbox" :checked="todo.done" @change="handelCheck(todo.id)"/>
+
+            <!-- 利用v-model数据双向绑定，可以修改藏在对象里面的 props传过来的数据 -->
+            <!-- <input type="checkbox" v-model="todo.done"/> -->
             <span>{{ todo.title }}</span>
         </label>
-        <button class="btn btn-danger" style="display:none">删除</button>
+        <button class="btn btn-danger" @click="handelRemove(todo.id)">删除</button>
     </li>
 </template>
 
 <script>
 export default {
     name: 'ToItem',
-    props:["todo"]
+    props:["todo","checkTodo","removeTodo"],
+    methods:{
+        handelCheck(id){
+            this.checkTodo(id)
+        },
+        handelRemove(id){
+            if (confirm("你确定删除吗？")){
+                // console.log("@@",id)
+                this.removeTodo(id)
+            }
+        }
+    }
 }
 </script>
 
@@ -50,4 +64,13 @@ li:before {
 li:last-child {
     border-bottom: none;
 }
+
+li:hover{
+    background-color: #ddd;
+}
+
+li:hover button {
+    display: block;
+}
+
 </style>

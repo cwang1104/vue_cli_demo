@@ -1,10 +1,10 @@
 <template>
     <div class="todo-footer">
         <label>
-            <input type="checkbox" />
+            <input type="checkbox" :checked="doneTotal === todoTotal" @change="setAllHandel"/>
         </label>
         <span>
-            <span>已完成0</span> / 全部2
+            <span>已完成 {{ doneTotal }}</span> / 全部 {{ todoTotal }}
         </span>
         <button class="btn btn-danger">清除已完成任务</button>
     </div>
@@ -12,7 +12,21 @@
 
 <script>
 export default {
-    name: 'ToFooter'
+    name: 'ToFooter',
+    props:["todos","setAllTodo"],
+    computed:{
+        doneTotal(){
+            return this.todos.reduce((pre,todo)=> pre + (todo.done ? 1:0),0)
+        },
+        todoTotal(){
+            return this.todos.length
+        }
+    },
+    methods:{
+        setAllHandel(){
+            this.setAllTodo(!this.doneTotal === this.todoTotal)
+        }
+    }
 }
 </script>
 
