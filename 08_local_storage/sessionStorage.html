@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sessionStorage</title>
+</head>
+<body>
+    <h2>sessionStorage</h2>
+    <h2>关闭浏览器后全部清空</h2>
+    <button onclick="setData()">点击保存一个值</button><br><br>
+    <button onclick="readData()">点击读取一个值</button><br><br>
+    <button onclick="delData()">点击删除一个值</button><br><br>
+    <button onclick="delAllData()">点击清除所有值</button><br><br>
+    <script>
+        function setData(){
+            console.log('@')
+
+            sessionStorage.setItem('msg','hello')
+            sessionStorage.setItem("person",JSON.stringify({
+                name:"张三",
+                age:10,
+            }))
+        };
+        function readData(){
+            //读不出来则为null
+            const p = sessionStorage.getItem("person")
+            // 解析
+            console.log(JSON.parse(p))
+            alert(p)
+        };
+
+        function delData(){
+            sessionStorage.removeItem('msg')
+            sessionStorage.removeItem('person')
+        };
+
+        function delAllData(){
+            sessionStorage.clear()
+        }
+
+    </script>
+</body>
+
+</html>
