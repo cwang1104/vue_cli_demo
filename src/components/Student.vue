@@ -1,10 +1,10 @@
 
 
 <template>
-    <div class="demo">
+    <div class="student">
         <h2>学生姓名:{{ name }}</h2>
         <h2>性别:{{ sex }}</h2>
-
+        <button @click="getName">获取学生名</button>
        
     </div>
 </template>
@@ -20,12 +20,20 @@ export default {
             sex:'男',
             age:10
         }
+    },
+    props:["getStudentName"],
+    methods:{
+        getName(){
+            this.getStudentName(this.name)
+        }
     }
+
 }
 </script>
 
 <style scoped>
-    .demo{
+    .student{
         background-color: orange;
+        padding: 5px;
     }
 </style>

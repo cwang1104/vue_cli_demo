@@ -1,10 +1,17 @@
 <template>
-    <div>
+    <div class="app">
+        <h2>{{ msg }}</h2>
         <br>
-        <School/>
+        <!-- 子组件给父组件传递数据： 给子组件绑定自定义事件实现 -->
+                <!-- 方法一 -->
+        <School v-on:sdc="getSchoolName"/>
+
+        <!-- 方法2 vue3移除 -->
+        <!-- <School ref="school"/> -->
         <hr>
         <br>
-        <Student/>
+        <!-- 子组件给父组件传递数据： 通过props给子组件传递父组件函数实现 -->
+        <Student :getStudentName="getStudentName"/>
         
     
     </div>
@@ -18,8 +25,29 @@
         name:"App",
         components:{
             Student,School
-        }
+        },
+        data(){
+            return {
+                msg:"你好啊"
+            }
+        },
+        methods:{
+            getSchoolName(name){
+                console.log("school name is ",name)
+            },
+            getStudentName(name){
+                console.log("student name",name)
+            }
+        },
+        mounted(){
+            // this.$refs.school.$once('sdc',this.getSchoolName)
+        },
     }   
 </script>
 
-<style></style>
+<style>
+    .app{
+        background-color: bisque;
+        padding: 5px;
+    }
+</style>
