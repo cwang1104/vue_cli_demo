@@ -4,7 +4,7 @@
             <div class="todo-wrap">
                 <ToHeader :addTodo="addTodo"></ToHeader>
                 <ToList :todos="todos" :checkTodo="checkTodo" :removeTodo="removeTodo"></ToList>
-               <ToFooter :todos="todos" :setAllTodo="setAllTodo" :clearDoneTodo="clearDoneTodo"></ToFooter>
+                <ToFooter :todos="todos" :setAllTodo="setAllTodo" :clearDoneTodo="clearDoneTodo"></ToFooter>
             </div>
         </div>
     </div>
@@ -26,29 +26,36 @@ export default {
         ToList,
         ToFooter
     },
-    data(){
+    data() {
         return {
-             todos:[
-                {id:'001',title:'抽烟',done:true},
-                {id:'002',title:'喝酒',done:true},
-                {id:'003',title:'开车',done:false},
-            ]   
+            todos: JSON.parse(sessionStorage.getItem("todos")) || []
         }
     },
-    methods:{
-        checkTodo(id){
-            console.log("修改了一个数据: ",id)
-            this.todos.forEach((todo)=>{
+    // mounted() {
+    //     // console.log("@@")
+    //     // const dt = [{id:"001",title:"吃饭",done:false}]
+    //     // this.todos = dt
+    //     // window.sessionStorage.setItem("todos",JSON.stringify({id:"001",title:"吃饭",done:false}))
+    //     const x = window.sessionStorage.getItem("todos")
+    //     if (x !== null) {
+    //         this.todos = JSON.parse(x)
+    //     }
+    // },
+    methods: {
+        checkTodo(id) {
+            console.log("修改了一个数据: ", id)
+            this.todos.forEach((todo) => {
                 if (todo.id === id) todo.done = !todo.done
             })
-            
+            // window.sessionStorage.setItem("todos",JSON.stringify(this.todos))
         },
-        addTodo(e){
-            console.log("添加了一个数据: ",e.title)
+        addTodo(e) {
+            console.log("添加了一个数据: ", e.title)
             this.todos.unshift(e)
+            // window.sessionStorage.setItem("todos",JSON.stringify(this.todos))
         },
-        removeTodo(id){
-            console.log("删除了一个数据：",id)
+        removeTodo(id) {
+            console.log("删除了一个数据：", id)
             // this.todos.forEach((todo)=>{
             //     if (todo.id === id){
             //         this.todos.pop(todo)
@@ -57,17 +64,29 @@ export default {
             // this.todos = this.todos.filter((todo)=>{
             //         return todo.id !== id
             // })
-            this.todos = this.todos.filter(todo=>todo.id !== id)
+            this.todos = this.todos.filter(todo => todo.id !== id)
+            // window.sessionStorage.setItem("todos",JSON.stringify(this.todos))
+
         },
-        setAllTodo(done){
-            this.todos.forEach((todo)=>{
+        setAllTodo(done) {
+            this.todos.forEach((todo) => {
                 todo.done = done
             })
+            // window.sessionStorage.setItem("todos",JSON.stringify(this.todos))
         },
-        clearDoneTodo(){
-            this.todos = this.todos.filter((todo)=>{
+        clearDoneTodo() {
+            this.todos = this.todos.filter((todo) => {
                 return todo.done === false
             })
+            // window.sessionStorage.setItem("todos",JSON.stringify(this.todos))
+        }
+    },
+    watch: {
+        todos: {
+            deep:true,
+            handler(value) {
+                sessionStorage.setItem("todos", JSON.stringify(value))
+            }
         }
     }
 }   
@@ -117,5 +136,4 @@ body {
     border: 1px solid #ddd;
     border-radius: 5px;
 }
-
 </style>
