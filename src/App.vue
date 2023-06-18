@@ -2,7 +2,7 @@
     <div id="root">
         <div class="todo-container">
             <div class="todo-wrap">
-                <ToHeader @addTodo="addTodo" ></ToHeader>
+                <ToHeader @addTodo="addTodo"></ToHeader>
                 <ToList :todos="todos"></ToList>
                 <ToFooter :todos="todos" @setAllTodo="setAllTodo" @clearDoneTodo="clearDoneTodo"></ToFooter>
             </div>
@@ -11,6 +11,8 @@
 </template>
 
 <script>
+
+import PubSub from 'pubsub-js'
 
 import ToHeader from './components/ToHeader.vue'
 // import ToItem from './components/ToItem.vue'
@@ -42,9 +44,27 @@ export default {
             console.log("添加了一个数据: ", e.title)
             this.todos.unshift(e)
         },
+
+        editTodo(todo) {
+            if (todo.isEdit !== undefined) {
+                todo.isEdit = true
+            } else {
+                todo.isEdit = true
+                console.log('@')
+            }
+        },
+        updateTodo(upto) {
+            console.log('get title',upto.title)
+            console.log("更新了一个数据: ", upto.id)
+            this.todos.forEach((todo) => {
+                if (todo.id === upto.id) {
+                    todo.title = upto.title
+                }
+            })
+        },
         removeTodo(id) {
             console.log("删除了一个数据：", id)
-    
+
             this.todos = this.todos.filter(todo => todo.id !== id)
 
         },
@@ -59,13 +79,22 @@ export default {
             })
         }
     },
-    mounted(){
-        this.$bus.on('checkTodo',this.checkTodo)
-        this.$bus.on('removeTodo',this.removeTodo)
+    mounted() {
+        this.$bus.on('checkTodo', this.checkTodo)
+        this.$bus.on("editTodo", this.editTodo)
+        this.$bus.on("updateTodo", this.updateTodo)
+        this.pubID = PubSub.subscribe('removeTodo', (_, value) => {
+            this.removeTodo(value)
+        })
+    },
+    beforeDestroy() {
+        this.$bus.off('checkTodo')
+        this.$bus.off('editTodo')
+        PubSub.unsubscribe(this.pubID)
     },
     watch: {
         todos: {
-            deep:true,
+            deep: true,
             handler(value) {
                 sessionStorage.setItem("todos", JSON.stringify(value))
             }
@@ -97,6 +126,18 @@ body {
     color: #fff;
     background-color: #da4f49;
     border: 1px solid #bd362f;
+}
+
+.btn-edit {
+    color: #fff;
+    background-color: skyblue;
+    border: 1px solid rgb(86, 140, 161);
+    margin-right: 5px;
+}
+
+.btn-edit:hover {
+    color: #fff;
+    background-color: rgb(105, 192, 226);
 }
 
 .btn-danger:hover {
