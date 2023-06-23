@@ -1,7 +1,9 @@
 <template>
     <div class="category">
         <h3>{{ title }}分类</h3>
-        <slot></slot>
+        <slot name="center">no 1</slot>
+       
+        <slot name="footer">no 2</slot>
 
     </div>
 </template>
