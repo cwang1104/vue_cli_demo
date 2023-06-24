@@ -1,9 +1,9 @@
 <template>
     <div>
-        <h2>当前和: {{ $store.state.sumNumber }}</h2>
-        <h2>当前十倍和: {{ $store.getters.bigSum }}</h2>
-        <h2>学校：{{ $store.state.school }}</h2>
-        <h2>学科：{{ $store.state.subject }}</h2>
+        <h2>当前和: {{ sumNumber }}</h2>
+        <h2>当前十倍和: {{ bigSum }}</h2>
+        <h2>学校：{{ school }}</h2>
+        <h2>学科：{{ subject }}</h2>
         <select v-model.number="n">
             <option value="1">1</option>
             <option value="2">2</option>
@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import { mapState,mapGetters } from 'vuex'
 export default {
     name:"Count",
     data(){
@@ -24,6 +25,21 @@ export default {
             n:1,  //选择的数
       
         }
+    },
+    computed:{
+
+        // mapState生成计算属性
+
+        //对象写法
+        //es6写法。。。（），
+        // ...mapState({sumNumber:"sumNumber",school:"school",subject:"subject"}),
+
+        //数组写法
+        ...mapState(["sumNumber","school","subject"]),
+
+
+        //生成getters 对应的计算属性
+        ...mapGetters(["bigSum"]),
     },
     methods:{
         increment(){
