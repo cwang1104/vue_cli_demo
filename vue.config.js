@@ -4,9 +4,9 @@ module.exports = defineConfig({
   lintOnSave:false,
 
   // 方式1 配置代理，不够灵活，只能配置1个服务器
-  devServer:{
-    proxy:'http://localhost:5000'
-  }
+  // devServer:{
+  //   proxy:'http://localhost:5000'
+  // }
 
   // 方式2
   // devServer:{
