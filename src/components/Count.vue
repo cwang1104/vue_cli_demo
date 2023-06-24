@@ -1,6 +1,9 @@
 <template>
     <div>
         <h2>当前和: {{ $store.state.sumNumber }}</h2>
+        <h2>当前十倍和: {{ $store.getters.bigSum }}</h2>
+        <h2>学校：{{ $store.state.school }}</h2>
+        <h2>学科：{{ $store.state.subject }}</h2>
         <select v-model.number="n">
             <option value="1">1</option>
             <option value="2">2</option>
@@ -25,6 +28,7 @@ export default {
     methods:{
         increment(){
            this.$store.dispatch("sum",this.n)
+           console.log(this.$store)
         },
         decrement(){
           this.$store.dispatch("de",this.n)

@@ -2,8 +2,6 @@
 //引入vuex
 import { createStore } from 'vuex'
 
-
-
 // 准备actions---用于响应组件中的动作
 const actions = {
     sum(ctx,val){
@@ -34,13 +32,21 @@ const mutations = {
 }
 // 准备state---用于存储数据
 const state = {
-    sumNumber:0  //求和的数
+    sumNumber:0,  //求和的数
+    school:"sgg",
+    subject:"前端"
 }
 
+const getters = {
+    bigSum(state){
+        return state.sumNumber * 10
+    }
+}
 
 export default new createStore({
     actions,
     mutations,
     state,
+    getters
 })
 
