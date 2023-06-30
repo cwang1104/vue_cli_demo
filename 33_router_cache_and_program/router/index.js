@@ -31,6 +31,9 @@ const router = new createRouter({
                             name:'detail',
                             path:'detail/:id/:title',
                             component:Detail,
+                            meta:{
+                                keepAlive:true
+                            },
                             
                             //props第一种，对象固定值写法
                             // props:{

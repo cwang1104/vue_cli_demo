@@ -9,9 +9,9 @@
                 <router-link class="list-group-item" active-class="active" to="/home/message">Message</router-link>
             </li>
         </ul>
-        <router-view v-slot="{ Message }">
+        <router-view v-slot="{ Component }">
             <keep-alive include="Message">
-                <component :is="Message" />
+                <component :is="Component" />
             </keep-alive>
         </router-view>
     </div>
